@@ -19,5 +19,5 @@ def format_alert(opp: Opportunity, max_stake: float, increment: float = 0.1) -> 
     return (
         f"ARB {opp.roi:+.2%}  {subject}{line}\n{legs}\n"
         f"  locked profit {profit:+.2f} on {sum(stakes):.2f} staked\n"
-        "  re-check both prices before placing: books correct within ~30s"
+        "  books correct within ~30s: execute both legs now"
     )

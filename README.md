@@ -2,8 +2,9 @@
 
 A system that finds **sports-betting arbitrage** ("surebets") across sportsbooks in
 real time. It scraped NBA odds from several Peruvian sportsbooks every five minutes,
-lined up the same bet across books, and sent a Telegram alert with the stakes for
-each leg whenever backing every outcome locked in a profit.
+lined up the same bet across books, sized the stakes for each leg, and executed both
+legs automatically whenever backing every outcome locked in a profit, with a Telegram
+message for each trade.
 
 I ran it with real money in 2023–2024. The typical edge was around **2%** per arbitrage.
 
@@ -52,10 +53,12 @@ flowchart LR
 
 ### What mattered in practice
 
-* **Speed.** Books correct mispriced lines in under half a minute. When an alert came
-  in, I checked the prices once more on both books and placed both legs immediately.
+* **Speed.** Books correct mispriced lines in under half a minute, so execution was
+  automated: the bot re-validated both prices and placed both legs within that window.
   The DAG runs every 5 minutes during betting hours, and each scrape is capped at
-  2 minutes.
+  2 minutes. The execution bot (sportsbook logins and bet placement) is not part of
+  this repository; this repo covers data collection, matching, the arbitrage math and
+  the alerts.
 * **Staying small.** Sportsbooks limit or close accounts that keep betting their
   maximum. `SUREBETS_MAX_STAKE` caps every leg, and the stakes are scaled to that cap.
 * **Player props.** Most of the arbitrages it found were on player props: points,
